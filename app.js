@@ -1,16 +1,18 @@
 import express from 'express';
+import 'dotenv/config.js';
+import bookRoutes from './routers/BookRoutes.js';
+import studentRoutes from './routers/StudentRoutes.js';
 const app = express();
-const PORT =  3109;
 
 app.use(express.json());
 try {
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`Server is running on http://localhost:${process.env.PORT || 3000}...`);
 });
 }catch(e){
     console.error('Error starting server:', e);
 }
 
-app.get('/bert', async(req, res) => {
-    res.status(200).json({message: 'bert'});
-});
+app.use('/book', bookRoutes);
+app.use('/students', studentRoutes);
+    
